@@ -1,0 +1,32 @@
+@mixin buttonColor($background, $border) {
+    border: 1px solid $border;
+    background: $background;
+}
+
+.button {
+    font-family: sans-serif;
+    height: 40px;
+    min-width: 60px;
+    padding: 0 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #ffffff;
+    width: fit-content;
+
+    &_disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    &_color {
+        &-primary {
+            @include buttonColor(#FF931F, #F57E00);
+        }
+
+        &-secondary {
+            @include buttonColor(#bbb, #999);
+        }
+    }
+}
