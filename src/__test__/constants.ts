@@ -5,7 +5,8 @@ export enum Locators {
     CARD_CONTENT = 'card-content',
     CARD_TITLE = 'card-title',
     CARD_SUBTITLE = 'card-subtitle',
-    INPUT = 'input'
+    INPUT = 'input',
+    CHECKBOX = 'checkbox'
 };
 
 export const BUTTON_TEXT = 'BUTTON_TEST_TEXT';
