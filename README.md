@@ -155,12 +155,15 @@ type CardProps = {
 **Требования:**
 ```typescript
 /** Пропсы, которые принимает компонент Input */
-type InputProps = {
+export type InputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'onChange'
+> & {
   /** Значение поля */
   value: string;
   /** Callback, вызываемый при вводе данных в поле */
   onChange: (value: string) => void;
-} & React.ButtonHTMLAttributes<HTMLInputElement>;
+};
 ```
 
 **Примеры использования:**
@@ -180,8 +183,8 @@ type InputProps = {
 />
 ```
 
-## 5. Dropdown
-Реализуйте компонент Выпадающий список (Фильтр).
+## 5. MultiDropdown
+Реализуйте компонент Выпадающий список с множественным выбором (Фильтр).
 
 **Требования:**
 ```typescript
@@ -194,18 +197,16 @@ type Option = {
 };
 
 /** Пропсы, которые принимает компонент Dropdown */
-type DropdownProps = {
+type MultiDropdownProps = {
     /** Массив возможных вариантов для выбора */
     options: Option[];
-    /** Текущее значение поля, может быть пустым */
+    /** Текущие выбранные значения поля, может быть пустым */
     value: Option[];
     /** Callback, вызываемый при выборе варианта */
     onChange: (value: Option[]) => void;
-    /** Плейсхолдер, отображается когда значение не выбрано */
-    placeholder?: string;
     /** Заблокирован ли дропдаун */
     disabled?: boolean;
-    /** Преобразовать выбранные значения в строку, отобража */
+    /** Преобразовать выбранные значения в строку. Отображается в дропдауне в качестве выбранного значения */
     pluralizeOptions: (value: Option[]) => string;
 }
 ```
@@ -213,24 +214,64 @@ type DropdownProps = {
 **Примеры использования:**
 ```typescript
 // Простой фильтр 
-<Dropdown
+<MultiDropdown
     options={[
         { key: 'msk', value: 'Москва' },
         { key: 'spb', value: 'Санкт-Петербург' },
         { key: 'ekb', value: 'Екатеринбург' }
     ]}
-    value={{ key: 'msk', value: 'Москва' }}
+    value={[{ key: 'msk', value: 'Москва' }]}
     onChange={({ key, value }: Option) => console.log('Выбрано:', key, value)}
+    pluralizeOptions={() => ''}
 />
 
-// Заблокированный фильтр с плейсхолдером
-<Dropdown
-    placeholder="Выберите город"
+// Заблокированный фильтр
+<MultiDropdown
     disabled
     options={someOptions}
     value={currentValue}
     onChange={onChange}
+    pluralizeOptions={(values: Option[]) => values.length === 0 ? 'Выберите город' : `Выбрано: ${values.length}`}
+/>
+
+// Фильтр, отображающий количество выбранных вариантов
+<MultiDropdown
+    options={someOptions}
+    value={currentValue}
+    onChange={onChange}
+    pluralizeOptions={(values: Option[]) => `Выбрано: ${values.length}`}
 />
 ```
 
-## 6. Чекбокс
+## 6. CheckBox
+Реализуйте компонент Чекбокс.
+
+**Требования:**
+```typescript
+/** Пропсы, которые принимает компонент CheckBox */
+type CheckBoxProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'onChange'
+> & {
+    /** Текущее значение (отмечен или нет)*/
+    value: boolean;
+    /** Вызывается при клике на чекбокс */
+    onChange: (value: boolean) => void;
+};
+```
+
+**Примеры использования:**
+```typescript
+// Простой чекбокс 
+<CheckBox
+  value={checked}
+  onChange={setChecked}
+/>
+
+// Заблокированный чекбокс 
+<CheckBox
+  disabled
+  value={checked}
+  onChange={setChecked}
+/>
+```
