@@ -6,10 +6,10 @@ export type CheckBoxProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'onChange' | 'value'
 > & {
-    /** Текущее значение (отмечен или нет)*/
-    value: boolean;
-    /** Вызывается при клике на чекбокс */
-    onChange: (value: boolean) => void;
+  /** Текущее значение (отмечен или нет)*/
+  value: boolean;
+  /** Вызывается при клике на чекбокс */
+  onChange: (value: boolean) => void;
 };
 
 export const CheckBox = React.memo<CheckBoxProps>(
