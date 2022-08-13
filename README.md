@@ -68,7 +68,7 @@ export type ButtonProps = React.PropsWithChildren<{
      * Также кнопка должна переходить в состояние disabled
      */
     loading?: boolean;
-    /** Задает один из возможных вариантов раскраски кнопки */
+    /** Цвет кнопки, дефолтное значение -  ButtonColor.primary*/
     color?: ButtonColor;
 }> & React.ButtonHTMLAttributes<HTMLButtonElement>;
 ```
