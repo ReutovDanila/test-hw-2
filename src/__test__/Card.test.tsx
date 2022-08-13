@@ -55,6 +55,17 @@ describe('Тестирование компонента Card', () => {
     expect(imageElement).toHaveAttribute('src', testImageSrc);
   });
 
+  test('Для изображения используется html-тег img', () => {
+    const testImageSrc = 'https://www.google.com/favicon.ico';
+    const { baseElement } = render(
+      <Card image={testImageSrc} title={CARD_TITLE} subtitle={CARD_SUBTITLE} />
+    );
+
+    const imageElement = baseElement.querySelector('img')
+
+    expect(imageElement).toHaveAttribute('src', testImageSrc);
+  });
+
   test('Пропс content передаются и отображается', () => {
     const { rerender } = render(
       <Card

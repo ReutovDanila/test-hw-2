@@ -41,16 +41,45 @@ type LoaderProps = {
 <Loader loading={isLoading} />  // лоадер, который отображается только при isLoading=false
 ```
 
-## 2. Button
+## 2. WithLoader
+Реализуйте компонент WithLoader.
+
+**Требования:**
+1. Всегда отображает вложенные элементы (children)
+1. При передаче loading=true поверх контента отображает лоадер
+1. Должен переиспользовать компонент Loader
+
+```typescript
+/** Пропсы, которые принимает компонент WithLoader */
+export type WithLoaderProps = React.PropsWithChildren<{
+  loading: boolean;
+}>;
+```
+
+**Примеры использования:**
+```typescript
+// 
+<WithLoader loading={isLoading}>
+  <div>Семантическая верстка наше все!</div>
+</WithLoader>
+```
+
+## 3. Button
 Реализуйте компонент Кнопка.
 
 **Макеты кнопки:**
 
 **Требования:**
+1. Кнопка использует html-тег button и принимает все его пропсы
 1. Кнопка принимает пропсы ButtonProps и удовлетворяет их требованиям, описанным ниже
 1. Текст кнопки/дочерний элемент передается в качестве children
 1. При передаче дополнительного className не должны сбрасываться внутренние (описанные вами в стилях) классы кнопки
 1. Компонент должен быть реактивным, то есть реагировать на изменение любых пропсов
+1. css-классы должны быть названы согласно [Методологии БЭМ](https://ru.bem.info/methodology/quick-start/):
+1.1. Базовый класс кнопки: `.button`
+1.1. Класс-модификатор заблокированной кнопки:  `.button_disabled`
+1.1. Класс-модификатор, отвечающий за раскраску кнопки: `.button_color-primary`, `.button_color-primary`
+1. Для управления классами необходимо использовать библиотеку classnames
 
 ```typescript
 /** Возможные раскраски кнопки */
@@ -80,7 +109,7 @@ export type ButtonProps = React.PropsWithChildren<{
   Отправить
 </Button>
 
-// Второстепенная кнопка, отображающая лоадер при загрузке каких-то данных
+// Второстепенная кнопка, отображающая компонент Loader при загрузке каких-то данных
 <Button
   color={ButtonColor.secondary}
   loading={isLoading}
@@ -104,7 +133,7 @@ export type ButtonProps = React.PropsWithChildren<{
 </Button>
 ```
 
-## 3. Card
+## 4. Card
 Реализуйте компонент Карточка (Элемент списка).
 
 **Макеты карточки:**
@@ -114,6 +143,8 @@ export type ButtonProps = React.PropsWithChildren<{
 [Crypto](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=9%3A823)
 
 **Требования:**
+1. Для изображения используется html-тег img
+
 ```typescript
 /** Пропсы, которые принимает компонент Card */
 type CardProps = {
@@ -149,7 +180,7 @@ type CardProps = {
 />
 ```
 
-## 4. Input
+## 5. Input
 Реализуйте компонент Поле ввода.
 
 **Требования:**
@@ -183,7 +214,7 @@ export type InputProps = Omit<
 />
 ```
 
-## 5. MultiDropdown
+## 6. MultiDropdown
 Реализуйте компонент Выпадающий список с множественным выбором (Фильтр).
 
 **Требования:**
@@ -243,7 +274,7 @@ type MultiDropdownProps = {
 />
 ```
 
-## 6. CheckBox
+## 7. CheckBox
 Реализуйте компонент Чекбокс.
 
 **Требования:**
@@ -253,8 +284,6 @@ type CheckBoxProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'onChange'
 > & {
-    /** Текущее значение (отмечен или нет)*/
-    value: boolean;
     /** Вызывается при клике на чекбокс */
     onChange: (value: boolean) => void;
 };
@@ -264,14 +293,14 @@ type CheckBoxProps = Omit<
 ```typescript
 // Простой чекбокс 
 <CheckBox
-  value={checked}
+  checked={checked}
   onChange={setChecked}
 />
 
 // Заблокированный чекбокс 
 <CheckBox
   disabled
-  value={checked}
+  checked={checked}
   onChange={setChecked}
 />
 ```

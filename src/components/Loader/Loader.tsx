@@ -11,17 +11,19 @@ export enum LoaderSize {
 export type LoaderProps = {
     loading?: boolean;
     size?: LoaderSize;
+    className?: string;
 };
 
 export const Loader = React.memo<LoaderProps>(({
     loading = true,
-    size = LoaderSize.m
+    size = LoaderSize.m,
+    className
 }: LoaderProps) => {
     if (!loading) {
         return null;
     }
 
     return (
-        <div className={cn(styles.loader, styles[`loader_size-${size}`])}/>
+        <div className={cn(styles.loader, styles[`loader_size-${size}`], className)}/>
     )
 });

@@ -7,178 +7,254 @@ import userEvent from '@testing-library/user-event';
 jest.mock('../components/Loader/Loader.tsx', () => require('./MockLoader'));
 
 describe('Тестирование компонента Button', () => {
-    test('Текстовый children пробрасывается корректно', () => {
-        render(<Button>{BUTTON_TEXT}</Button>);
-      
-        const buttonElement = screen.getByText(BUTTON_TEXT);
-      
-        expect(buttonElement).toBeInTheDocument();
-    });
-      
-    test('Элемент children пробрасывается корректно', () => {
-        render(<Button><span data-testid={Locators.BUTTON_CHILDREN}>{BUTTON_TEXT}</span></Button>);
-    
-        const buttonElement = screen.getByText(BUTTON_TEXT);
-        const innerElement = screen.getByTestId(Locators.BUTTON_CHILDREN);
-    
-        expect(buttonElement).toContainElement(innerElement);
-    });
+  test('Текстовый children пробрасывается корректно', () => {
+    render(<Button data-testid={Locators.BUTTON}>{BUTTON_TEXT}</Button>);
 
-    test('При передаче loading=true внутри кнопки отображается компонент Loader', () => {
-        const { rerender } = render(<Button loading>{BUTTON_TEXT}</Button>);
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
-        const loader = screen.getByTestId(Locators.LOADER);
-    
-        expect(buttonElement).toContainElement(loader);
+    expect(buttonElement).toHaveTextContent(BUTTON_TEXT);
+  });
 
-        rerender(<Button>{BUTTON_TEXT}</Button>);
-        expect(buttonElement).not.toContainElement(loader);
-    });
+  test('Компонент Button использует html-тег button', () => {
+    render(<Button data-testid={Locators.BUTTON}>{BUTTON_TEXT}</Button>);
 
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
 
-    test('При передаче loading=true кнопка задизейбленная', () => {
-        const { rerender } = render(<Button loading>{BUTTON_TEXT}</Button>);
+    expect(buttonElement.tagName).toBe('BUTTON');
+  });
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
-    
-        expect(buttonElement).toBeDisabled();
+  test('Элемент children пробрасывается корректно', () => {
+    render(
+      <Button data-testid={Locators.BUTTON}>
+        <span data-testid={Locators.BUTTON_CHILDREN}>{BUTTON_TEXT}</span>
+      </Button>
+    );
 
-        rerender(<Button>{BUTTON_TEXT}</Button>);
-        expect(buttonElement).not.toBeDisabled();
-    });
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
+    const innerElement = screen.getByTestId(Locators.BUTTON_CHILDREN);
 
-    test('При передаче loading=true при клике на кнопку onClick не вызывается', () => {
-        const mockOnClick = jest.fn();
-        render(<Button onClick={mockOnClick} loading>{BUTTON_TEXT}</Button>);
+    expect(buttonElement).toContainElement(innerElement);
+  });
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
-        userEvent.click(buttonElement);
-    
-        expect(mockOnClick).not.toBeCalled();
-    });
+  test('При передаче loading=true внутри кнопки отображается компонент Loader', () => {
+    const { rerender } = render(
+      <Button loading data-testid={Locators.BUTTON}>
+        {BUTTON_TEXT}
+      </Button>
+    );
 
-    test('При передаче loading=true добавляется класс button_disabled', () => {
-        const { rerender } = render(<Button loading>{BUTTON_TEXT}</Button>);
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
+    const loader = screen.getByTestId(Locators.LOADER);
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
+    expect(buttonElement).toContainElement(loader);
 
-        expect(buttonElement).toBeDisabled();
+    rerender(<Button data-testid={Locators.BUTTON}>{BUTTON_TEXT}</Button>);
+    expect(buttonElement).not.toContainElement(loader);
+  });
 
-        rerender(<Button>{BUTTON_TEXT}</Button>);
+  test('При передаче loading=true кнопка задизейбленная', () => {
+    const { rerender } = render(
+      <Button data-testid={Locators.BUTTON} loading>
+        {BUTTON_TEXT}
+      </Button>
+    );
 
-        expect(buttonElement).not.toBeDisabled();
-    });
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
 
-    test('Переданный onClick вызывается при клике', () => {
-        const mockOnClick = jest.fn();
-        render(<Button onClick={mockOnClick}>{BUTTON_TEXT}</Button>);
+    expect(buttonElement).toBeDisabled();
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
-        userEvent.click(buttonElement);
-    
-        expect(mockOnClick).toBeCalledTimes(1);
-    });
+    rerender(<Button data-testid={Locators.BUTTON}>{BUTTON_TEXT}</Button>);
+    expect(buttonElement).not.toBeDisabled();
+  });
 
-    test('Пропс color учавствует в формировании класса на кнопке', () => {
-        const { rerender } = render(<Button color={ButtonColor.primary}>{BUTTON_TEXT}</Button>);
+  test('При передаче loading=true при клике на кнопку onClick не вызывается', () => {
+    const mockOnClick = jest.fn();
+    render(
+      <Button data-testid={Locators.BUTTON} onClick={mockOnClick} loading>
+        {BUTTON_TEXT}
+      </Button>
+    );
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
+    userEvent.click(buttonElement);
 
-        expect(buttonElement).toHaveClass('button_color-primary');
+    expect(mockOnClick).not.toBeCalled();
+  });
 
-        rerender(<Button color={ButtonColor.secondary}>{BUTTON_TEXT}</Button>);
+  test('При передаче loading=true добавляется класс button_disabled', () => {
+    const { rerender } = render(
+      <Button data-testid={Locators.BUTTON} loading>
+        {BUTTON_TEXT}
+      </Button>
+    );
 
-        expect(buttonElement).toHaveClass('button_color-secondary');
-    });
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
 
-    test('При disabled=true не вызывается onClick', () => {
-        const mockOnClick = jest.fn();
-        const { rerender } = render(<Button onClick={mockOnClick} disabled>{BUTTON_TEXT}</Button>);
+    expect(buttonElement).toHaveClass('button_disabled');
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
-        userEvent.click(buttonElement);
-    
-        expect(mockOnClick).not.toBeCalled();
+    rerender(<Button data-testid={Locators.BUTTON}>{BUTTON_TEXT}</Button>);
 
-        rerender(<Button onClick={mockOnClick}>{BUTTON_TEXT}</Button>);
-        userEvent.click(buttonElement);
+    expect(buttonElement).not.toHaveClass('button_disabled');
+  });
 
-        expect(mockOnClick).toBeCalledTimes(1);
-    });
+  test('Переданный onClick вызывается при клике', () => {
+    const mockOnClick = jest.fn();
+    render(
+      <Button onClick={mockOnClick} data-testid={Locators.BUTTON}>
+        {BUTTON_TEXT}
+      </Button>
+    );
 
-    test('При disabled=true добавляется класс button_disabled', () => {
-        const { rerender } = render(<Button disabled>{BUTTON_TEXT}</Button>);
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
+    userEvent.click(buttonElement);
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
+    expect(mockOnClick).toBeCalledTimes(1);
+  });
 
-        expect(buttonElement).toHaveClass('button_disabled');
+  test('Пропс color учавствует в формировании класса на кнопке', () => {
+    const { rerender } = render(
+      <Button color={ButtonColor.primary} data-testid={Locators.BUTTON}>
+        {BUTTON_TEXT}
+      </Button>
+    );
 
-        rerender(<Button>{BUTTON_TEXT}</Button>);
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
 
-        expect(buttonElement).not.toHaveClass('button_disabled');
-    });
+    expect(buttonElement).toHaveClass('button_color-primary');
 
-    test('При disabled=true проставляется атрибут disabled=true у кнопки', () => {
-        const { rerender } = render(<Button disabled>{BUTTON_TEXT}</Button>);
+    rerender(
+      <Button color={ButtonColor.secondary} data-testid={Locators.BUTTON}>
+        {BUTTON_TEXT}
+      </Button>
+    );
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
+    expect(buttonElement).toHaveClass('button_color-secondary');
+  });
 
-        expect(buttonElement).toBeDisabled();
+  test('Цвет кнопки по умолчанию - ButtonColor.primary', () => {
+    const { rerender } = render(
+      <Button data-testid={Locators.BUTTON}>
+        {BUTTON_TEXT}
+      </Button>
+    );
 
-        rerender(<Button>{BUTTON_TEXT}</Button>);
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
 
-        expect(buttonElement).not.toBeDisabled();
-    });
+    expect(buttonElement).toHaveClass('button_color-primary');
+  });
 
-    test('Можно передать дополнительный className, не влияющий на остальные классы кнопки', () => {
-        const testClassName = 'test-class';
-        render(<Button className={testClassName} disabled>{BUTTON_TEXT}</Button>);
+  test('При disabled=true не вызывается onClick', () => {
+    const mockOnClick = jest.fn();
+    const { rerender } = render(
+      <Button data-testid={Locators.BUTTON} onClick={mockOnClick} disabled>
+        {BUTTON_TEXT}
+      </Button>
+    );
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
+    userEvent.click(buttonElement);
 
-        expect(buttonElement).toHaveClass(testClassName, 'button_disabled');
-    });
+    expect(mockOnClick).not.toBeCalled();
 
-    test('Пробрасываются все пропсы, которые принимает нативная кнопка', () => {
-        const onHover = jest.fn();
-        const onUnHover = jest.fn();
-        const onFocus = jest.fn();
-        const onBlur = jest.fn();
-        const id = 'BUTTON_ID';
-        const name = 'BUTTON_NAME';
-        const width = '132px';
+    rerender(
+      <Button data-testid={Locators.BUTTON} onClick={mockOnClick}>
+        {BUTTON_TEXT}
+      </Button>
+    );
+    userEvent.click(buttonElement);
 
-        render(
-            <Button
-                onMouseOver={onHover}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                onMouseOut={onUnHover}
-                id={id}
-                name={name}
-                style={{ width }}
-            >
-                {BUTTON_TEXT}
-            </Button>
-        );
+    expect(mockOnClick).toBeCalledTimes(1);
+  });
 
-        const buttonElement = screen.getByText(BUTTON_TEXT);
+  test('При disabled=true добавляется класс button_disabled', () => {
+    const { rerender } = render(
+      <Button data-testid={Locators.BUTTON} disabled>
+        {BUTTON_TEXT}
+      </Button>
+    );
 
-        userEvent.hover(buttonElement);
-        expect(onHover).toBeCalledTimes(1);
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
 
-        userEvent.unhover(buttonElement);
-        expect(onUnHover).toBeCalledTimes(1);
+    expect(buttonElement).toHaveClass('button_disabled');
 
-        userEvent.tab();
-        expect(onFocus).toBeCalledTimes(1);
+    rerender(<Button data-testid={Locators.BUTTON}>{BUTTON_TEXT}</Button>);
 
-        userEvent.tab();
-        expect(onBlur).toBeCalledTimes(1);
+    expect(buttonElement).not.toHaveClass('button_disabled');
+  });
 
-        expect(buttonElement).toHaveAttribute('id', id);
-        expect(buttonElement).toHaveAttribute('name', name);
-        expect(buttonElement).toHaveStyle({ width });
-    });
+  test('При disabled=true проставляется атрибут disabled=true у кнопки', () => {
+    const { rerender } = render(
+      <Button data-testid={Locators.BUTTON} disabled>
+        {BUTTON_TEXT}
+      </Button>
+    );
+
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
+
+    expect(buttonElement).toBeDisabled();
+
+    rerender(<Button data-testid={Locators.BUTTON}>{BUTTON_TEXT}</Button>);
+
+    expect(buttonElement).not.toBeDisabled();
+  });
+
+  test('Можно передать дополнительный className, не влияющий на остальные классы кнопки', () => {
+    const testClassName = 'test-class';
+    render(
+      <Button className={testClassName} data-testid={Locators.BUTTON} disabled>
+        {BUTTON_TEXT}
+      </Button>
+    );
+
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
+
+    expect(buttonElement).toHaveClass(testClassName, 'button_disabled');
+  });
+
+  test('Пробрасываются все пропсы, которые принимает нативная кнопка', () => {
+    const onHover = jest.fn();
+    const onUnHover = jest.fn();
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
+    const id = 'BUTTON_ID';
+    const name = 'BUTTON_NAME';
+    const width = '132px';
+
+    render(
+      <Button
+        onMouseOver={onHover}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onMouseOut={onUnHover}
+        id={id}
+        name={name}
+        style={{ width }}
+        data-testid={Locators.BUTTON}
+      >
+        {BUTTON_TEXT}
+      </Button>
+    );
+
+    const buttonElement = screen.getByTestId(Locators.BUTTON);
+
+    userEvent.hover(buttonElement);
+    expect(onHover).toBeCalledTimes(1);
+
+    userEvent.unhover(buttonElement);
+    expect(onUnHover).toBeCalledTimes(1);
+
+    userEvent.tab();
+    expect(onFocus).toBeCalledTimes(1);
+
+    userEvent.tab();
+    expect(onBlur).toBeCalledTimes(1);
+
+    expect(buttonElement).toHaveAttribute('id', id);
+    expect(buttonElement).toHaveAttribute('name', name);
+    expect(buttonElement).toHaveStyle({ width });
+  });
+
+  test.todo(
+    'Для управления css-классами должна использоваться библиотека classnames'
+  );
 });

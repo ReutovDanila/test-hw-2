@@ -5,10 +5,10 @@ import userEvent from '@testing-library/user-event';
 import { CheckBox } from '../components/CheckBox/CheckBox';
 
 describe('Тестирование компонента CheckBox', () => {
-  test('Значение чекбокса зависит от пропса value', () => {
+  test('Значение чекбокса зависит от пропса checked', () => {
     const { rerender } = render(
       <CheckBox
-        value={true}
+        checked={true}
         onChange={() => {}}
         data-testid={Locators.CHECKBOX}
       />
@@ -20,7 +20,7 @@ describe('Тестирование компонента CheckBox', () => {
 
     rerender(
       <CheckBox
-        value={false}
+        checked={false}
         onChange={() => {}}
         data-testid={Locators.CHECKBOX}
       />
@@ -32,7 +32,7 @@ describe('Тестирование компонента CheckBox', () => {
     const mockOnChange = jest.fn();
     const { rerender } = render(
       <CheckBox
-        value={true}
+        checked={true}
         onChange={mockOnChange}
         data-testid={Locators.CHECKBOX}
       />
@@ -45,7 +45,7 @@ describe('Тестирование компонента CheckBox', () => {
 
     rerender(
       <CheckBox
-        value={false}
+        checked={false}
         onChange={mockOnChange}
         data-testid={Locators.CHECKBOX}
       />
@@ -55,12 +55,21 @@ describe('Тестирование компонента CheckBox', () => {
     expect(mockOnChange).toBeCalledWith(true);
   });
 
+  test('Компонент CheckBox использует html-тег input', () => {
+    render(<CheckBox checked={true} onChange={() => {}} data-testid={Locators.CHECKBOX} />);
+
+    const inputElement = screen.getByTestId(Locators.CHECKBOX);
+
+    expect(inputElement.tagName).toBe('INPUT');
+    expect(inputElement).toHaveAttribute('type', 'checkbox');
+  });
+
   test('При передаче disabled=true не вызывается onChange', () => {
     const mockOnChange = jest.fn();
     const { rerender } = render(
       <CheckBox
         disabled
-        value={true}
+        checked={true}
         onChange={mockOnChange}
         data-testid={Locators.CHECKBOX}
       />
@@ -73,7 +82,7 @@ describe('Тестирование компонента CheckBox', () => {
 
     rerender(
       <CheckBox
-        value={true}
+        checked={true}
         onChange={mockOnChange}
         data-testid={Locators.CHECKBOX}
       />
@@ -87,7 +96,7 @@ describe('Тестирование компонента CheckBox', () => {
     const { rerender } = render(
       <CheckBox
         disabled={true}
-        value={true}
+        checked={true}
         onChange={() => {}}
         data-testid={Locators.CHECKBOX}
       />
@@ -99,7 +108,7 @@ describe('Тестирование компонента CheckBox', () => {
     rerender(
       <CheckBox
         disabled={false}
-        value={true}
+        checked={true}
         onChange={() => {}}
         data-testid={Locators.CHECKBOX}
       />

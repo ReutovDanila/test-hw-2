@@ -56,6 +56,15 @@ describe('Тестирование компонента Input', () => {
     expect(mockOnChange).toBeCalledWith('div');
   });
 
+  test('Компонент Input использует нативный тег input с типом text', () => {
+    render(<Input value="" onChange={() => {}} data-testid={Locators.INPUT} />);
+
+    const inputElement = screen.getByTestId(Locators.INPUT);
+
+    expect(inputElement.tagName).toBe('INPUT');
+    expect(inputElement).toHaveAttribute('type', 'text');
+  });
+
   test('При disabled=true добавляется класс input_disabled', () => {
     const { rerender } = render(
       <Input
@@ -71,11 +80,7 @@ describe('Тестирование компонента Input', () => {
     expect(inputElement).toHaveClass('input_disabled');
 
     rerender(
-      <Input
-        value=""
-        onChange={() => {}}
-        data-testid={Locators.INPUT}
-      />
+      <Input value="" onChange={() => {}} data-testid={Locators.INPUT} />
     );
 
     expect(inputElement).not.toHaveClass('input_disabled');
@@ -96,16 +101,12 @@ describe('Тестирование компонента Input', () => {
     expect(inputElement).toBeDisabled();
 
     rerender(
-      <Input
-        value=""
-        onChange={() => {}}
-        data-testid={Locators.INPUT}
-      />
+      <Input value="" onChange={() => {}} data-testid={Locators.INPUT} />
     );
 
     expect(inputElement).not.toBeDisabled();
   });
-  
+
   test('При передаче disabled=true во время попытки ввода не вызывается onChange', () => {
     const mockOnChange = jest.fn();
     render(
@@ -137,6 +138,23 @@ describe('Тестирование компонента Input', () => {
     const inputElement = screen.getByTestId(Locators.INPUT);
 
     expect(inputElement).toHaveClass(testClassName, 'input_disabled');
+  });
+
+  test('При disabled=true атрибут value передается корректно', () => {
+    const testValue = 'some_value';
+    render(
+      <Input
+        value={testValue}
+        onChange={() => {}}
+        data-testid={Locators.INPUT}
+        disabled
+      />
+    );
+
+    const inputElement = screen.getByTestId(Locators.INPUT);
+
+    expect(inputElement).toHaveAttribute('value', testValue);
+    expect(inputElement).toHaveValue(testValue);
 });
 
   test('Пробрасываются все пропсы, которые принимает нативный инпут', () => {
@@ -160,6 +178,7 @@ describe('Тестирование компонента Input', () => {
         data-testid={Locators.INPUT}
         name={name}
         style={{ width }}
+        readOnly
       />
     );
 
@@ -179,6 +198,7 @@ describe('Тестирование компонента Input', () => {
 
     expect(buttonElement).toHaveAttribute('id', id);
     expect(buttonElement).toHaveAttribute('name', name);
+    expect(buttonElement).toHaveAttribute('readonly');
     expect(buttonElement).toHaveStyle({ width });
   });
 });

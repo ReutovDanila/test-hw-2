@@ -1,4 +1,5 @@
 export enum Locators {
+    BUTTON = 'button',
     BUTTON_CHILDREN = 'button-inner-element',
     LOADER = 'loader',
     TEST_CONTAINER = 'test-container',

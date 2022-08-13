@@ -4,16 +4,14 @@ import styles from './CheckBox.module.scss';
 
 export type CheckBoxProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  'onChange' | 'value'
+  'onChange'
 > & {
-  /** Текущее значение (отмечен или нет)*/
-  value: boolean;
   /** Вызывается при клике на чекбокс */
   onChange: (value: boolean) => void;
 };
 
 export const CheckBox = React.memo<CheckBoxProps>(
-  ({ value, onChange, ...props }: CheckBoxProps) => {
+  ({ checked, onChange, ...props }: CheckBoxProps) => {
     const handleChange = React.useCallback(
       (event: React.ChangeEvent<HTMLInputElement>): void => {
         onChange(event.target.checked);
@@ -25,7 +23,7 @@ export const CheckBox = React.memo<CheckBoxProps>(
       <input
         {...props}
         type="checkbox"
-        checked={value}
+        checked={checked}
         onChange={handleChange}
         className={cn(
           styles['checkbox'],
