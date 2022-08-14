@@ -5,7 +5,10 @@
 ## 1. Loader
 Реализуйте компонент Лоадер
 
-**Макеты:**
+**Макеты лоадера:**
+[GitHub](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=81%3A606),
+[E-commerce](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=90%3A839),
+
 
 **Требования:**
 ```typescript
@@ -68,6 +71,9 @@ export type WithLoaderProps = React.PropsWithChildren<{
 Реализуйте компонент Кнопка.
 
 **Макеты кнопки:**
+[GitHub](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=80%3A548),
+[E-commerce](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=90%3A793),
+
 
 **Требования:**
 1. Кнопка использует html-тег button и принимает все его пропсы
@@ -76,9 +82,9 @@ export type WithLoaderProps = React.PropsWithChildren<{
 1. При передаче дополнительного className не должны сбрасываться внутренние (описанные вами в стилях) классы кнопки
 1. Компонент должен быть реактивным, то есть реагировать на изменение любых пропсов
 1. css-классы должны быть названы согласно [Методологии БЭМ](https://ru.bem.info/methodology/quick-start/):
-1.1. Базовый класс кнопки: `.button`
-1.1. Класс-модификатор заблокированной кнопки:  `.button_disabled`
-1.1. Класс-модификатор, отвечающий за раскраску кнопки: `.button_color-primary`, `.button_color-primary`
+    * Базовый класс кнопки: `.button`
+    * Класс-модификатор заблокированной кнопки:  `.button_disabled`
+    * Класс-модификатор, отвечающий за раскраску кнопки: `.button_color-primary`, `.button_color-primary`
 1. Для управления классами необходимо использовать библиотеку classnames
 
 ```typescript
@@ -138,9 +144,7 @@ export type ButtonProps = React.PropsWithChildren<{
 
 **Макеты карточки:**
 [GitHub](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=1%3A63),
-[E-commerce](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=1%3A2224),
-[Food](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=7%3A814),
-[Crypto](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=9%3A823)
+[E-commerce](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=90%3A825),
 
 **Требования:**
 1. Для изображения используется html-тег img
@@ -183,7 +187,14 @@ type CardProps = {
 ## 5. Input
 Реализуйте компонент Поле ввода.
 
+**Макеты инпута:**
+[GitHub](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=1%3A33),
+[E-commerce](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=90%3A792),
+
+
 **Требования:**
+1. Необходимо использовать html-тег input
+
 ```typescript
 /** Пропсы, которые принимает компонент Input */
 export type InputProps = Omit<
@@ -216,6 +227,11 @@ export type InputProps = Omit<
 
 ## 6. MultiDropdown
 Реализуйте компонент Выпадающий список с множественным выбором (Фильтр).
+
+**Макеты мультидропдауна:**
+[GitHub](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=77%3A372),
+[E-commerce](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=91%3A954),
+
 
 **Требования:**
 ```typescript
@@ -277,7 +293,13 @@ type MultiDropdownProps = {
 ## 7. CheckBox
 Реализуйте компонент Чекбокс.
 
+**Макеты чекбокса:**
+[GitHub](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=81%3A633),
+[E-commerce](https://www.figma.com/file/xS1HZPihGT3NpSigyxSAm8/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B?node-id=90%3A877),
+
 **Требования:**
+1. Необходимо использовать html-тег input с типом "чекбокс"
+
 ```typescript
 /** Пропсы, которые принимает компонент CheckBox */
 type CheckBoxProps = Omit<
