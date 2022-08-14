@@ -1,0 +1,41 @@
+.multi-dropdown {
+    position: relative;
+
+    &_disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    &__control {
+        width: 200px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid #bbb;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    &__options {
+        position: absolute;
+        top: 40px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #bbb;
+        max-height: 200px;
+        width: 200px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__item {
+        border-bottom: 1px solid #bbb;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        cursor: pointer;
+
+        &_selected {
+            background: #ddd;
+        }
+    }
+}
