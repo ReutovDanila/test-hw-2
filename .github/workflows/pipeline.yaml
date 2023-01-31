@@ -2,6 +2,7 @@ name: Check homework
 on: [push]
 jobs:
   validate:
+    if: ${{ github.repository_owner != 'ktsstudio' }}
     runs-on: ubuntu-latest
     env:
       IMAGE: 'ktshub/frontend-hw-checker:task-2'
